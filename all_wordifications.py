@@ -1,5 +1,5 @@
-# Function all_wordifications() will output a text file with a list of all possible phone numbers
-# These phone numbers include an English word and any unused numbers
+# Function all_wordifications() will output a text file named wordifications.txt with a list of all possible phone numbers
+# These phone numbers include an English word at least 2 letters long (according to nltk's "words" library) and any unused numbers
 # author Michelle George, mgeorge40@gatech.edu
 
 from nltk.corpus import words
@@ -16,7 +16,7 @@ def all_wordifications(number):
     numbers = ''.join(groups[2:]) # join all groups of numbers that were separated by dashes
     if not numbers.isdigit() or '0' in numbers or '1' in numbers:
         raise Exception('The input should be a phone number starting with 1-800- followed by 7 more integers between 2 and 9, containing no letters. The inputted phone number was {}'.format(number))
-    # Create an output file to store all your word/number combinations in
+    # Create an output file to store all your word/number combinations
     f = open("wordifications.txt", "w+")
     length = len(numbers)
     english_words = set(words.words())
@@ -24,7 +24,6 @@ def all_wordifications(number):
     for l in range(length, 1, -1):
         # increment your starting position (s)
         for s in range(0, length-l+1, 1):
-            phone_list = []
             wordlist = getwordlist(numbers[s:s+l], '', 0, [], english_words)
             # use getwordlist function, will return a list of all possible words at this start position and length
             if wordlist != None:
