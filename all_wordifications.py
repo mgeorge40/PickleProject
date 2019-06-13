@@ -7,11 +7,18 @@ from nltk.corpus import words
 dictionary = {'2':'ABC', '3':'DEF', '4':'GHI', '5':'JKL', '6':'MNO', '7':'PQRS', '8':'TUV', '9':'WXYZ'}
 
 def all_wordifications(number):
-    # Create an output file to store all your word/number combinations in
-    f = open("wordifications.txt", "w+")
+    # First check to see if we have enough numbers to make a phone number
+    # Our phone number should also start with 1-800-
+    # Don't accept phone numbers that already contain letters
+    if number[0:6] != '1-800-' and (len(number) != 13 or len(number) != 14):
+        raise Exception('The input should be a phone number starting with 1-800- followed by 7 more digits. The inputted phone number was {}'.format(number))
     groups = number.split('-')  # separate groups of numbers, removing dashes
     # FOR NOW assume number was inputted correctly with 1-800- at start
     numbers = ''.join(groups[2:]) # join all groups of numbers that were separated by dashes
+    if not numbers.isdigit() or '0' in numbers or '1' in numbers:
+        raise Exception('The input should be a phone number starting with 1-800- followed by 7 more integers between 2 and 9, containing no letters. The inputted phone number was {}'.format(number))
+    # Create an output file to store all your word/number combinations in
+    f = open("wordifications.txt", "w+")
     length = len(numbers)
     # try the longest words first, then step down your length (l) if no words are found
     for l in range(length, 0, -1):

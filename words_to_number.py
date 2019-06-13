@@ -6,8 +6,11 @@ dictionary = {'A':'2', 'B':'2', 'C':'2', 'D':'3', 'E':'3', 'F':'3', 'G':'4', 'H'
                'U':'8', 'V':'8', 'W':'9', 'X':'9', 'Y':'9', 'Z':'9'}
 
 def words_to_number(str):
+    # First check to see if we have enough numbers/letters to make a phone number
+    # Our phone number should also start with 1-800-
+    if str[0:6] != '1-800-' and (len(str) != 13 or len(str) != 14):
+        raise Exception('The input should be a phone number starting with 1-800- followed by 7 more digits. The inputted phone number was {}'.format(str))
     groups = str.split('-') # separate groups of numbers, removing dashes
-    # FOR NOW assume number was inputted correctly with 1-800- at start
     output = '1-800-'
     count = 0 # use this count to know where to put the - back in
     for group in groups[2:]:
